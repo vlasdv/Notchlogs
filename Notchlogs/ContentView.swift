@@ -13,7 +13,15 @@ struct Message: Identifiable {
 }
 
 struct ContentView: View {
-    let messages = [
+    @State var messages = [
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
         Message(date: Date.now, text: "Some message to show"),
         Message(date: Date.now, text: "Some message to show"),
         Message(date: Date.now, text: "Some message to show")
@@ -31,6 +39,9 @@ struct ContentView: View {
                     TextField("Input", text: $inputText)
                     Button("Send", systemImage: "arrow.up.message") {
                         // Code to handle message saving
+                        let newMessage = Message(date: Date.now, text: inputText)
+                        messages.append(newMessage)
+                        inputText = ""
                     }
                 }
                 .padding()
