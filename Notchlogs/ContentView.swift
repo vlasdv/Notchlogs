@@ -6,16 +6,36 @@
 //
 
 import SwiftUI
+struct Message: Identifiable {
+    var id = UUID()
+    var date: Date
+    var text: String
+}
 
 struct ContentView: View {
+    let messages = [
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show"),
+        Message(date: Date.now, text: "Some message to show")
+    ]
+
+    @State var inputText = ""
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                List(messages) { message in
+                    Text(message.text)
+                }
+                HStack {
+                    TextField("Input", text: $inputText)
+                    Button("Send", systemImage: "arrow.up.message") {
+                        // Code to handle message saving
+                    }
+                }
+                .padding()
+            }
         }
-        .padding()
     }
 }
 
