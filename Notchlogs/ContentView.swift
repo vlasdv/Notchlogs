@@ -6,10 +6,32 @@
 //
 
 import SwiftUI
+
+struct MessageGroup: Identifiable, Hashable {
+    var id = UUID()
+    var dateStart: Date {
+        if let firstChildren = children?.first {
+            return firstChildren.date
+        } else {
+            return Date.now
+        }
+    }
+    var dateEnd: Date {
+        if let lastChildren = children?.last {
+            return lastChildren.date
+        } else {
+            return Date.now
+        }
+    }
+    var text: String
+    var children: [Message]?
+}
+
 struct Message: Identifiable, Hashable {
     var id = UUID()
     var date: Date
     var text: String
+    var parent: MessageGroup?
 }
 
 struct ContentView: View {
@@ -40,7 +62,7 @@ struct ContentView: View {
         Message(date: Date.now, text: "Some message to 6"),
         Message(date: Date.now, text: "Some message to 7"),
         Message(date: Date.now, text: "Some message to 8"),
-        Message(date: Date.now, text: "Some message to 9")
+        Message(date: Date.now, text: "Some message to 9Some message to 9Some message to 9Some message to 9Some message to 9")
     ]
 
     @State var inputText = ""
@@ -51,8 +73,14 @@ struct ContentView: View {
                 ScrollViewReader { proxy in
                     List {
                         ForEach(messages) { message in
-                            Text(message.text)
-                                .id(message.id)
+                            HStack(alignment: .top) {
+                                Text(message.text)
+                                    .id(message.id)
+                                Spacer(minLength: 10)
+                                Text(message.date.formatted(date: .omitted, time: .shortened))
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                         .onDelete(perform: { indexSet in
                             messages.remove(atOffsets: indexSet)
@@ -76,6 +104,8 @@ struct ContentView: View {
 
                 HStack {
                     TextField("Input", text: $inputText)
+                        .textFieldStyle(.roundedBorder)
+
                     Button("Send", systemImage: "arrow.up.message") {
                         // Code to handle message saving
                         let newMessage = Message(date: Date.now, text: inputText)
