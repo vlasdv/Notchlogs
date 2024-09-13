@@ -7,31 +7,10 @@
 
 import SwiftUI
 
-struct MessageGroup: Identifiable, Hashable {
-    var id = UUID()
-    var dateStart: Date {
-        if let firstChildren = children?.first {
-            return firstChildren.date
-        } else {
-            return Date.now
-        }
-    }
-    var dateEnd: Date {
-        if let lastChildren = children?.last {
-            return lastChildren.date
-        } else {
-            return Date.now
-        }
-    }
-    var text: String
-    var children: [Message]?
-}
-
 struct Message: Identifiable, Hashable {
     var id = UUID()
     var date: Date
     var text: String
-    var parent: MessageGroup?
 }
 
 struct ContentView: View {
@@ -92,23 +71,18 @@ struct ContentView: View {
             VStack {
                 ScrollViewReader { proxy in
                     List {
-                        ForEach(groupedMessages, id: \.self) { messages in
-                            Section {
-                                ForEach(messages) { message in
-                                    HStack(alignment: .top) {
-                                        Text(message.text)
-                                            .id(message.id)
-                                        Spacer(minLength: 10)
-                                        Text(message.date.formatted(date: .omitted, time: .shortened))
-                                            .font(.footnote)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                                .onDelete(perform: { indexSet in
-                                    //                                messages.remove(atOffsets: indexSet)
-                                })
+                        ForEach(messages, id: \.self) { message in
+
+                            HStack(alignment: .top) {
+                                Text(message.text)
+                                    .id(message.id)
+                                Spacer(minLength: 10)
+                                Text(message.date.formatted(date: .omitted, time: .shortened))
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
                             }
                         }
+                        .onDelete(perform: removeMesages)
                     }
                     .listSectionSpacing(10.0)
                     .onAppear {
@@ -142,6 +116,10 @@ struct ContentView: View {
             }
             .navigationTitle("Notchlogs")
         }
+    }
+
+    func removeMesages(at offsets: IndexSet) {
+        messages.remove(atOffsets: offsets)
     }
 }
 
