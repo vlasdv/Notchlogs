@@ -11,6 +11,7 @@
 		67EB45CD2C8E3B82008C53CA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EB45CC2C8E3B82008C53CA /* ContentView.swift */; };
 		67EB45CF2C8E3B83008C53CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB45CE2C8E3B83008C53CA /* Assets.xcassets */; };
 		67EB45D22C8E3B83008C53CA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EB45D12C8E3B83008C53CA /* Preview Assets.xcassets */; };
+		67ED9EC52C96208D00F13F00 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67ED9EC42C96208D00F13F00 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		67EB45CC2C8E3B82008C53CA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		67EB45CE2C8E3B83008C53CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67EB45D12C8E3B83008C53CA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		67ED9EC42C96208D00F13F00 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				67EB45CA2C8E3B82008C53CA /* NotchlogsApp.swift */,
 				67EB45CC2C8E3B82008C53CA /* ContentView.swift */,
+				67ED9EC42C96208D00F13F00 /* Message.swift */,
 				67EB45CE2C8E3B83008C53CA /* Assets.xcassets */,
 				67EB45D02C8E3B83008C53CA /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67ED9EC52C96208D00F13F00 /* Message.swift in Sources */,
 				67EB45CD2C8E3B82008C53CA /* ContentView.swift in Sources */,
 				67EB45CB2C8E3B82008C53CA /* NotchlogsApp.swift in Sources */,
 			);

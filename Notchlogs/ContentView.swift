@@ -7,16 +7,7 @@
 
 import SwiftUI
 
-struct Message: Identifiable, Hashable {
-    var id = UUID()
-    var date: Date
-    var text: String
-}
-
 struct ContentView: View {
-    @State var lastMessage: Message?
-    @State var combinedMessageText = ""
-
     @State var messages = [
         Message(date: Date.now, text: "Some message to 1"),
         Message(date: Date.now, text: "Some message to 2"),
@@ -47,23 +38,6 @@ struct ContentView: View {
         Message(date: Date.now.addingTimeInterval(200), text: "Some message to 9Some message to 9Some message to 9Some message to 9Some message to 9")
     ]
 
-    private var groupedMessages: [[Message]] {
-        var group = [Message]()
-        var result = [[Message]]()
-        var lastMessage: Message?
-
-        for message in messages {
-            if (message.text == lastMessage?.text) || group.isEmpty {
-                group.append(message)
-            } else {
-                result.append(group)
-                group = [message]
-            }
-            lastMessage = message
-        }
-        return result
-    }
-
     @State var inputText = ""
 
     var body: some View {
@@ -71,11 +45,9 @@ struct ContentView: View {
             VStack {
                 ScrollViewReader { proxy in
                     List {
-                        ForEach(messages, id: \.self) { message in
-
+                        ForEach(messages) { message in
                             HStack(alignment: .top) {
                                 Text(message.text)
-                                    .id(message.id)
                                 Spacer(minLength: 10)
                                 Text(message.date.formatted(date: .omitted, time: .shortened))
                                     .font(.footnote)
@@ -84,10 +56,8 @@ struct ContentView: View {
                         }
                         .onDelete(perform: removeMesages)
                     }
-                    .listSectionSpacing(10.0)
                     .onAppear {
                         if let lastItem = messages.last {
-                            print("last found")
                             proxy.scrollTo(lastItem.id, anchor: .trailing)
                         }
                     }
