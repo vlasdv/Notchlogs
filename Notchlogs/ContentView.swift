@@ -68,6 +68,10 @@ struct ContentView: View {
 
     func removeMesages(at offsets: IndexSet) {
         // remove message from SwiftData
+        for i in offsets {
+            let message = messages[i]
+            modelContext.delete(message)
+        }
     }
 
     func addTestMessages() {
