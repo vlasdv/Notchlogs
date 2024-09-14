@@ -5,38 +5,12 @@
 //  Created by Dmitrii Vlasov on 08/09/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @State var messages = [
-        Message(date: Date.now, text: "Some message to 1"),
-        Message(date: Date.now, text: "Some message to 2"),
-        Message(date: Date.now, text: "Some message to 3"),
-        Message(date: Date.now, text: "Some message to 4"),
-        Message(date: Date.now, text: "Some message to 5"),
-        Message(date: Date.now, text: "Some message to 6"),
-        Message(date: Date.now, text: "Some message to 7"),
-        Message(date: Date.now, text: "Some message to 8"),
-        Message(date: Date.now, text: "Some message to 9"),
-        Message(date: Date.now, text: "Some message to 1"),
-        Message(date: Date.now, text: "Some message to 2"),
-        Message(date: Date.now, text: "Some message to 3"),
-        Message(date: Date.now, text: "Some message to 4"),
-        Message(date: Date.now, text: "Some message to 5"),
-        Message(date: Date.now, text: "Some message to 6"),
-        Message(date: Date.now, text: "Some message to 7"),
-        Message(date: Date.now, text: "Some message to 8"),
-        Message(date: Date.now, text: "Some message to 9"),
-        Message(date: Date.now, text: "Some message to 1"),
-        Message(date: Date.now, text: "Some message to 2"),
-        Message(date: Date.now, text: "Some message to 4"),
-        Message(date: Date.now, text: "Some message to 4"),
-        Message(date: Date.now, text: "Some message to 4"),
-        Message(date: Date.now.addingTimeInterval(50), text: "Some message to 7"),
-        Message(date: Date.now.addingTimeInterval(100), text: "Some message to 7"),
-        Message(date: Date.now.addingTimeInterval(100), text: "Some message to 7"),
-        Message(date: Date.now.addingTimeInterval(200), text: "Some message to 9Some message to 9Some message to 9Some message to 9Some message to 9")
-    ]
+    @Query var messages: [Message]
+    @Environment(\.modelContext) var modelContext
 
     @State var inputText = ""
 
@@ -77,19 +51,29 @@ struct ContentView: View {
 
                     Button("Send", systemImage: "arrow.up.message") {
                         // Code to handle message saving
-                        let newMessage = Message(date: Date.now, text: inputText)
-                        messages.append(newMessage)
+                        let message = Message(date: Date.now, text: inputText)
+                        modelContext.insert(message)
                         inputText = ""
                     }
                 }
                 .padding()
             }
             .navigationTitle("Notchlogs")
+            .toolbar {
+                Button("Add test messages", systemImage: "plus", action: addTestMessages)
+            }
         }
     }
 
     func removeMesages(at offsets: IndexSet) {
-        messages.remove(atOffsets: offsets)
+        // remove message from SwiftData
+    }
+
+    func addTestMessages() {
+        for i in 0...10 {
+            let message = Message(date: Date.now.addingTimeInterval(TimeInterval(i * 100)), text: "message \(i)")
+            modelContext.insert(message)
+        }
     }
 }
 
