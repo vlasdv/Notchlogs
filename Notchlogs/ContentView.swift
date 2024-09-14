@@ -60,7 +60,8 @@ struct ContentView: View {
             }
             .navigationTitle("Notchlogs")
             .toolbar {
-                Button("Add test messages", systemImage: "plus", action: addTestMessages)
+                Button("Add Test Messages", systemImage: "plus", action: addTestMessages)
+                Button("Delete All Messages", systemImage: "trash", action: removeAllMessages)
             }
         }
     }
@@ -73,6 +74,12 @@ struct ContentView: View {
         for i in 0...10 {
             let message = Message(date: Date.now.addingTimeInterval(TimeInterval(i * 100)), text: "message \(i)")
             modelContext.insert(message)
+        }
+    }
+
+    func removeAllMessages() {
+        for message in messages {
+            modelContext.delete(message)
         }
     }
 }
