@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Query var messages: [Message]
+    @Query(sort: \Message.date) var messages: [Message]
     @Environment(\.modelContext) var modelContext
 
     @State var inputText = ""
